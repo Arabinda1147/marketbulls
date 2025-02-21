@@ -13,3 +13,23 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
+
+// 🚀 Integrate Upstox API Login
+async function getLoginUrl() {
+    try {
+        const response = await fetch('https://your-aws-server.com/login');  // Replace with your AWS backend URL
+        const data = await response.json();
+        window.location.href = data.loginUrl;  // Redirect to Upstox login page
+    } catch (error) {
+        console.error("Error fetching login URL:", error);
+        alert("Failed to connect to Upstox. Please try again.");
+    }
+}
+
+// Attach event listener to login button
+document.addEventListener("DOMContentLoaded", function() {
+    const loginBtn = document.getElementById("login-btn");
+    if (loginBtn) {
+        loginBtn.addEventListener("click", getLoginUrl);
+    }
+});
