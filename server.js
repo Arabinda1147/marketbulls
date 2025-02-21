@@ -6,8 +6,13 @@ const app = express();
 app.use(express.json());
 
 const api = new Upstox();
-api.init({ apiKey: process.env.UPSTOX_API_KEY });
+api.init({ 
+    apiKey: process.env.UPSTOX_API_KEY,
+    apiSecret: process.env.UPSTOX_API_SECRET,
+    redirectUri: process.env.UPSTOX_REDIRECT_URI
+});
 
+// Endpoint to get login URL
 app.get('/login', async (req, res) => {
     try {
         const loginUrl = await api.getLoginUri();
@@ -17,4 +22,6 @@ app.get('/login', async (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Server running on port 3000'));
+// Start the server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
